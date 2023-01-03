@@ -1,1 +1,1 @@
-# A Push Down Automata 
+# A Push Down Automata to accept input strings of the form 0^n 1^4n
