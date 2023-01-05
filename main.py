@@ -19,6 +19,7 @@ def pushFourWithZ():
     stk = stk+'z0000'
 
 transitions = {
+    # State: {Read: {Stack: (Next State, Stack Action)}}
     'q0': {
         '0': {'z': ('q0',pushFourWithZ), '0': ('q0',pushFour),'1': ('reject',nothing),'e':('reject',nothing)},
         '1': {'z': ('reject',nothing), '0': ('q1',nothing),'1': ('reject',nothing),'e':('reject',nothing)},
