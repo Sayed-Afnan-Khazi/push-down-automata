@@ -18,6 +18,10 @@ def pushFourWithZ():
     global stk
     stk = stk+'z0000'
 
+def pushZ():
+    global stk
+    stk = stk + 'z'
+
 transitions = {
     # State: {Read: {Stack: (Next State, Stack Action)}}
     'q0': {
@@ -28,7 +32,7 @@ transitions = {
     'q1': {
         '0': {'z': ('reject',nothing), '0': ('reject',nothing),'1': ('reject',nothing),'e':('reject',nothing)},
         '1': {'z': ('reject',nothing), '0': ('q1',nothing),'1': ('reject',nothing),'e':('reject',nothing)},
-        'e': {'z': ('q2',nothing), '0': ('reject',nothing),'1': ('reject',nothing),'e':('q1',nothing)},
+        'e': {'z': ('q2',pushZ), '0': ('reject',nothing),'1': ('reject',nothing),'e':('q1',nothing)},
     },
     'q2': {},
 }
@@ -58,7 +62,7 @@ def PDA(input_string,print_output = True):
             print("Running String:",running_string)
             print("String Read:",i)
             print("Current State:",current_state)
-            print("Stack:",stk)
+            
 
         # Check if the automata has reached a final state
         if current_state == 'reject':
@@ -67,6 +71,8 @@ def PDA(input_string,print_output = True):
             break
         elif current_state == 'q2':
             print("Accepted")
+            if print_output:
+                print("Stack:",stk)
             return 0
             break
 
@@ -74,6 +80,8 @@ def PDA(input_string,print_output = True):
         exe = transition[1] # Get the stack action to be executed
         stk = stk[:-1] # Pop the topmost element of the stack
         exe() # Execute the stack action (push into the stack)
+        if print_output:
+            print("Stack:",stk)
 
 if __name__ == '__main__':
     # Take an example input string
